@@ -13,7 +13,12 @@ export class OffersService {
 
   async getOffers(): Promise<Offer[]> {
     const result = await this.offerModel.find().exec();
-    console.log(result);
+    return result;
+  }
+
+  async addOffer(offer: Offer): Promise<Offer> {
+    const newOffer = new this.offerModel(offer);
+    const result = await newOffer.save();
     return result;
   }
 }
