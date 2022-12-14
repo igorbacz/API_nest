@@ -8,6 +8,9 @@ export type OfferDocument = HydratedDocument<Offer>;
 @Schema()
 export class Offer {
   @Prop()
+  _id: string;
+
+  @Prop()
   dateAdded: string;
 
   @Prop()
