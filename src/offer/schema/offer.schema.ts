@@ -1,14 +1,14 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
-import { HydratedDocument } from 'mongoose';
+import mongoose, { HydratedDocument } from 'mongoose';
 import { Geolocation } from './geolocation.schema';
 import { TechStack } from './techStack.schema';
 
 export type OfferDocument = HydratedDocument<Offer>;
 
-@Schema()
+@Schema({ collection: 'offers' })
 export class Offer {
-  @Prop()
-  _id: string;
+  // @Prop()
+  // _id: string;
 
   @Prop()
   dateAdded: string;
@@ -51,6 +51,9 @@ export class Offer {
 
   @Prop()
   techStack: TechStack;
+
+  @Prop()
+  adminEmail: string;
 }
 
 export const OfferSchema = SchemaFactory.createForClass(Offer);

@@ -1,35 +1,50 @@
-import { Injectable, NotFoundException } from '@nestjs/common';
+import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
-import { Model, ObjectId } from 'mongoose';
-import { Offer } from 'src/offer/schema/offer.schema';
+import { Model } from 'mongoose';
+import { Offer, OfferDocument } from 'src/offer/schema/offer.schema';
+import { CreateOfferDto } from './dto/createOffer.dto';
 
 @Injectable()
 export class OffersService {
-  offers: Offer[] = [];
-
-  constructor(
-    @InjectModel('Offer') private readonly offerModel: Model<Offer>,
-  ) {}
+  constructor(@InjectModel('Offer') private offerModel: Model<OfferDocument>) {}
 
   async getOffers(): Promise<Offer[]> {
     const result = await this.offerModel.find().exec();
     return result;
   }
 
-  async addOffer(offer: Offer): Promise<Offer> {
-    const newOffer = new this.offerModel(offer);
-    const result = await newOffer.save();
-    return result;
+  async addOffer(createOfferDto: CreateOfferDto): Promise<Offer> {
+    console.log(createOfferDto.adminEmail);
+    const newOffer = await new this.offerModel({
+      adress: createOfferDto.adress,
+      title: createOfferDto.title,
+      amount: createOfferDto.amount,
+      dateAdded: createOfferDto.dateAdded,
+      remote: createOfferDto.remote,
+      city: createOfferDto.city,
+      companyName: createOfferDto.companyName,
+      logo: createOfferDto.logo,
+      mainStack: createOfferDto.mainStack,
+      companySize: createOfferDto.companySize,
+      exp: createOfferDto.exp,
+      description: createOfferDto.description,
+      geolocation: createOfferDto.geolocation,
+      adminEmail: createOfferDto.adminEmail,
+    });
+    // const resultOff = await newOffer.save();
+    // console.log(resultOff);
+    return newOffer.save();
   }
 
   async deleteOffer(id: string) {
     try {
       const offer = await this.offerModel.find({ _id: id }).exec();
-      const findOffer = { ...offer };
+      const offerToDelete = { ...offer };
+      console.log(offerToDelete);
       if (!offer) {
         throw new Error("Offer doesn't exist");
       }
-      await this.offerModel.deleteOne(findOffer);
+      await this.offerModel.deleteOne(offerToDelete);
     } catch (error) {
       console.log(error);
     }
