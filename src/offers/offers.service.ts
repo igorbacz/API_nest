@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
-import { Model } from 'mongoose';
-import { Offer, OfferDocument } from 'src/offer/schema/offer.schema';
+import mongoose, { Model, Types } from 'mongoose';
+import { Offer, OfferDocument } from 'src/offers/schema/offer.schema';
 import { CreateOfferDto } from './dto/createOffer.dto';
 
 @Injectable()
@@ -14,20 +14,15 @@ export class OffersService {
   }
 
   async addOffer(createOfferDto: CreateOfferDto): Promise<Offer> {
-    const newOffer = await new this.offerModel(createOfferDto);
+    const newOffer = new this.offerModel(createOfferDto);
     const result = await newOffer.save();
     return result;
   }
 
-  async deleteOffer(id: string) {
+  async deleteOffer(id: string): Promise<void> {
     try {
-      const offer = await this.offerModel.find({ _id: id }).exec();
-      const offerToDelete = { ...offer };
-      console.log(offerToDelete);
-      if (!offer) {
-        throw new Error("Offer doesn't exist");
-      }
-      await this.offerModel.deleteOne(offerToDelete);
+      const objId = new Types.ObjectId(id);
+      await this.offerModel.findByIdAndDelete(objId);
     } catch (error) {
       console.log(error);
     }
