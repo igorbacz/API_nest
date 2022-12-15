@@ -14,26 +14,9 @@ export class OffersService {
   }
 
   async addOffer(createOfferDto: CreateOfferDto): Promise<Offer> {
-    console.log(createOfferDto.adminEmail);
-    const newOffer = await new this.offerModel({
-      adress: createOfferDto.adress,
-      title: createOfferDto.title,
-      amount: createOfferDto.amount,
-      dateAdded: createOfferDto.dateAdded,
-      remote: createOfferDto.remote,
-      city: createOfferDto.city,
-      companyName: createOfferDto.companyName,
-      logo: createOfferDto.logo,
-      mainStack: createOfferDto.mainStack,
-      companySize: createOfferDto.companySize,
-      exp: createOfferDto.exp,
-      description: createOfferDto.description,
-      geolocation: createOfferDto.geolocation,
-      adminEmail: createOfferDto.adminEmail,
-    });
-    // const resultOff = await newOffer.save();
-    // console.log(resultOff);
-    return newOffer.save();
+    const newOffer = await new this.offerModel(createOfferDto);
+    const result = await newOffer.save();
+    return result;
   }
 
   async deleteOffer(id: string) {

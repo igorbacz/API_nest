@@ -1,16 +1,5 @@
-import {
-  Body,
-  Controller,
-  Delete,
-  Get,
-  HttpStatus,
-  Param,
-  Post,
-  Res,
-} from '@nestjs/common';
-import { Geolocation } from 'src/offer/schema/geolocation.schema';
+import { Body, Controller, Delete, Get, Param, Post } from '@nestjs/common';
 import { Offer } from 'src/offer/schema/offer.schema';
-import { TechStack } from 'src/offer/schema/techStack.schema';
 import { CreateOfferDto } from './dto/createOffer.dto';
 import { OffersService } from './offers.service';
 
