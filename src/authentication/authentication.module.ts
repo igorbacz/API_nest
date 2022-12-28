@@ -8,18 +8,18 @@ import { LocalStrategy } from './local.strategy';
 import { ConfigService, ConfigModule } from '@nestjs/config';
 import { JwtStrategy } from './jwt.strategy';
 import { MongooseModule } from '@nestjs/mongoose';
-import { Users } from 'src/users/users';
 import { User } from 'src/users/schema/user.model';
 
 @Module({
   imports: [
     MongooseModule.forFeature([
       {
-        name: Users.name,
+        name: User.name,
         schema: User.model.schema,
       },
     ]),
     UsersModule,
+    ConfigModule,
     PassportModule.register({ defaultStrategy: 'jwt' }),
     JwtModule.registerAsync({
       imports: [ConfigModule],
@@ -31,8 +31,6 @@ import { User } from 'src/users/schema/user.model';
         },
       }),
       inject: [ConfigService],
-      //   secret: 'secretKey',
-      //   signOptions: { expiresIn: '60s' },
     }),
   ],
   exports: [AuthenticationService],

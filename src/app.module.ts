@@ -2,8 +2,6 @@ import { Module } from '@nestjs/common';
 import { MongooseModule } from '@nestjs/mongoose';
 import * as dotenv from 'dotenv';
 import { OffersModule } from './offers/offers.module';
-// import { AppController } from './app.controller';
-import { AppService } from './app.service';
 import { UsersModule } from './users/users.module';
 import { AuthenticationService } from './authentication/authentication.service';
 import { AuthenticationModule } from './authentication/authentication.module';
@@ -27,6 +25,6 @@ dotenv.config();
       }),
     }),
   ],
-  providers: [AppService, AuthenticationService, JwtService],
+  providers: [AuthenticationService, JwtService],
 })
 export class AppModule {}

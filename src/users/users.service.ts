@@ -1,4 +1,4 @@
-import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
+import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { ModelType } from '@typegoose/typegoose/lib/types';
 import { BaseService } from 'src/shared/base.service';
@@ -19,10 +19,6 @@ export class UsersService extends BaseService<User> {
     if (user) {
       return user;
     }
-    // throw new HttpException(
-    //   'User with this email does not exist',
-    //   HttpStatus.NOT_FOUND,
-    // );
   }
 
   async create(userData: CreateUserDto): Promise<User> {

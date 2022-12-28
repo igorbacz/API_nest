@@ -8,6 +8,7 @@ import { ConfigService } from '@nestjs/config';
 
 interface TokenPayload {
   userId: string;
+  email: string;
 }
 
 @Injectable()
@@ -37,7 +38,7 @@ export class AuthenticationService {
       );
     }
   }
-  //login
+
   public async getAutheticatedUser(
     email: string,
     plainTextPassword: string,
@@ -58,7 +59,7 @@ export class AuthenticationService {
   private async verifyPasswword(
     plainTextPassword: string,
     hashedPassword: string,
-  ) {
+  ): Promise<void> {
     const isPasswordMatching = await bcrypt.compare(
       plainTextPassword,
       hashedPassword,
@@ -70,14 +71,14 @@ export class AuthenticationService {
       );
     }
   }
-  public getCookieWithJwtToken(userId: string) {
-    const payload: TokenPayload = { userId };
+  public getCookieWithJwtToken(userId: string, email: string): string {
+    const payload: TokenPayload = { userId, email };
     const token = this.jwtService.sign(payload);
     return `Authentication=${token}; HttpOnly; Path=/; Max-Age=${this.configService.get(
       'JWT_EXPIRATION_TIME',
     )}`;
   }
-  public getCookieForLogOut() {
+  public getCookieForLogOut(): string {
     return `Authentication=; HttpOnly; Path=/; Max-Age=0`;
   }
 }

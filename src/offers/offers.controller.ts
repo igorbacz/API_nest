@@ -24,6 +24,7 @@ export class OffersController {
   }
 
   @Post()
+  //TODO
   // @UseGuards(AuthGuard('jwt'))
   async createOffer(@Body() createOfferDto: CreateOfferDto): Promise<Offer> {
     const neww = this.offersService.create(createOfferDto);

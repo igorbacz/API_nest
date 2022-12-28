@@ -12,14 +12,19 @@ import { AuthGuard } from '@nestjs/passport';
 import { CreateUserDto } from 'src/users/dto/CreateUser.dto';
 import { User } from 'src/users/schema/user.model';
 import { AuthenticationService } from './authentication.service';
-import { Response } from 'express';
+import { Response, Request } from 'express';
+import JwtAuthenticationGuard from './jwt-authentication.guard';
+
+interface RequestWithUser extends Request {
+  user: User;
+}
 
 @Controller('authentication')
 export class AuthenticationController {
   constructor(private readonly authenticationService: AuthenticationService) {}
 
   @Post('register')
-  async register(@Body() registrationData: CreateUserDto) {
+  async register(@Body() registrationData: CreateUserDto): Promise<User> {
     return this.authenticationService.register(registrationData);
   }
 
@@ -27,21 +32,25 @@ export class AuthenticationController {
   @Post('login')
   async login(
     @Body() userData: User,
-    // @Req() request: User,
     @Res({ passthrough: true }) response: Response,
-  ) {
+  ): Promise<string> {
+    //TODO Promise<User>
     const user = userData;
-    const cookie = this.authenticationService.getCookieWithJwtToken(user.id);
+    const cookie = this.authenticationService.getCookieWithJwtToken(
+      user.id,
+      user.email,
+    );
     response.setHeader('Set-Cookie', cookie);
     user.password = undefined;
-    //TODO return user
+    // return user
+    //TODO Should returns user. Now returns cookie only for debugg.
     return cookie;
   }
 
-  @UseGuards(AuthGuard('jwt'))
+  @UseGuards(JwtAuthenticationGuard)
   @Post('logout')
   @HttpCode(200)
-  async logOut(@Req() request: User, @Res() response: Response) {
+  async logOut(@Req() @Res() response: Response): Promise<Response> {
     response.setHeader(
       'Set-Cookie',
       this.authenticationService.getCookieForLogOut(),
@@ -49,10 +58,10 @@ export class AuthenticationController {
     return response;
   }
 
-  @UseGuards(AuthGuard('jwt'))
+  @UseGuards(JwtAuthenticationGuard)
   @Get()
-  authenticate(@Req() request: User) {
-    const user = request;
+  authenticate(@Req() request: RequestWithUser): User {
+    const user = request.user;
     user.password = undefined;
     return user;
   }
