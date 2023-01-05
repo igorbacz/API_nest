@@ -1,7 +1,17 @@
-import { Body, Controller, Delete, Get, Param, Post } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  Delete,
+  Get,
+  Param,
+  Post,
+  Put,
+  UseGuards,
+} from '@nestjs/common';
+import { AuthGuard } from '@nestjs/passport';
 import { CreateOfferDto } from './dto/createOffer.dto';
 import { OffersService } from './offers.service';
-import { Offer } from './schema/offer.schema';
+import { Offer } from './schema/offer.model';
 
 @Controller('offers')
 export class OffersController {
@@ -9,16 +19,30 @@ export class OffersController {
 
   @Get()
   getAllOffers(): Promise<Offer[]> {
-    return this.offersService.getOffers();
+    const offers = this.offersService.findAll();
+    return offers;
   }
 
   @Post()
+  //TODO
+  // @UseGuards(AuthGuard('jwt'))
   async createOffer(@Body() createOfferDto: CreateOfferDto): Promise<Offer> {
-    return this.offersService.addOffer(createOfferDto);
+    const neww = this.offersService.create(createOfferDto);
+    return neww;
+  }
+
+  @Put(':id')
+  // @UseGuards(AuthGuard('jwt'))
+  async updateOffer(
+    @Param('id') id: string,
+    @Body() content: Offer,
+  ): Promise<Offer> {
+    return this.offersService.update(id, content);
   }
 
   @Delete(':id')
+  // @UseGuards(AuthGuard('jwt'))
   async deleteOffer(@Param('id') id: string): Promise<void> {
-    await this.offersService.deleteOffer(id);
+    await this.offersService.delete(id);
   }
 }
