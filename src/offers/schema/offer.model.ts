@@ -1,6 +1,7 @@
 import { prop, getModelForClass } from '@typegoose/typegoose';
 import { ModelType } from '@typegoose/typegoose/lib/types';
 import { HydratedDocument } from 'mongoose';
+import MongooseSchema from 'mongoose';
 import { BaseModel, schemaOptions } from 'src/shared/base.model';
 import { Geolocation } from './geolocation.schema';
 import { TechStack } from './techStack.schema';
@@ -44,11 +45,11 @@ export class Offer extends BaseModel<Offer> {
   @prop()
   description: string;
 
-  @prop()
+  @prop({ type: Object })
   geolocation: Geolocation;
 
-  @prop()
-  techStack: TechStack;
+  @prop({ type: MongooseSchema.Types.Array })
+  techStack: TechStack[];
 
   @prop()
   adminEmail: string;

@@ -25,7 +25,7 @@ export class CreateOfferDto {
 
   geolocation: Geolocation;
 
-  techStack: TechStack;
+  techStack: TechStack[];
 
   adminEmail: string;
 }

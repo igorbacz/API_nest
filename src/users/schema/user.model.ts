@@ -12,6 +12,9 @@ export class User extends BaseModel<User> {
   @prop()
   password: string;
 
+  @prop()
+  token: string;
+
   static get model(): ModelType<User> {
     return getModelForClass(User, { schemaOptions });
   }

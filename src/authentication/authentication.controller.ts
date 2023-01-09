@@ -33,8 +33,7 @@ export class AuthenticationController {
   async login(
     @Body() userData: User,
     @Res({ passthrough: true }) response: Response,
-  ): Promise<string> {
-    //TODO Promise<User>
+  ): Promise<User> {
     const user = userData;
     const cookie = this.authenticationService.getCookieWithJwtToken(
       user.id,
@@ -42,9 +41,10 @@ export class AuthenticationController {
     );
     response.setHeader('Set-Cookie', cookie);
     user.password = undefined;
-    // return user
-    //TODO Should returns user. Now returns cookie only for debugg.
-    return cookie;
+    user.token = cookie;
+    // console.log(user);
+    // console.log(cookie);
+    return user;
   }
 
   @UseGuards(JwtAuthenticationGuard)
@@ -61,6 +61,7 @@ export class AuthenticationController {
   @UseGuards(JwtAuthenticationGuard)
   @Get()
   authenticate(@Req() request: RequestWithUser): User {
+    console.log(request);
     const user = request.user;
     user.password = undefined;
     return user;
