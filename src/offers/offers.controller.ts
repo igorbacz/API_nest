@@ -9,6 +9,11 @@ import {
   UseGuards,
 } from '@nestjs/common';
 import { AuthGuard } from '@nestjs/passport';
+import {
+  ApiBadRequestResponse,
+  ApiBody,
+  ApiCreatedResponse,
+} from '@nestjs/swagger';
 import { CreateOfferDto } from './dto/createOffer.dto';
 import { OffersService } from './offers.service';
 import { Offer } from './schema/offer.model';
@@ -17,12 +22,20 @@ import { Offer } from './schema/offer.model';
 export class OffersController {
   constructor(private offersService: OffersService) {}
 
+  @ApiCreatedResponse({
+    description: 'Offers list from database as a response',
+    type: [CreateOfferDto],
+  })
   @Get()
   getAllOffers(): Promise<Offer[]> {
     const offers = this.offersService.findAll();
     return offers;
   }
 
+  @ApiCreatedResponse({
+    description: 'Created offer object as a response',
+    type: CreateOfferDto,
+  })
   @Post()
   //TODO
   // @UseGuards(AuthGuard('jwt'))
@@ -31,6 +44,14 @@ export class OffersController {
     return neww;
   }
 
+  @ApiCreatedResponse({
+    description: 'Updated offer object as a response',
+    type: CreateOfferDto,
+  })
+  @ApiBody({
+    description: 'Content of the updated offer',
+    type: CreateOfferDto,
+  })
   @Put(':id')
   // @UseGuards(AuthGuard('jwt'))
   async updateOffer(

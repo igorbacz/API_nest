@@ -14,6 +14,7 @@ import { User } from 'src/users/schema/user.model';
 import { AuthenticationService } from './authentication.service';
 import { Response, Request } from 'express';
 import JwtAuthenticationGuard from './jwt-authentication.guard';
+import { ApiBadRequestResponse, ApiCreatedResponse } from '@nestjs/swagger';
 
 interface RequestWithUser extends Request {
   user: User;
@@ -23,11 +24,25 @@ interface RequestWithUser extends Request {
 export class AuthenticationController {
   constructor(private readonly authenticationService: AuthenticationService) {}
 
+  @ApiCreatedResponse({
+    description: 'Created user object as response',
+    type: User,
+  })
+  @ApiBadRequestResponse({
+    description: 'User already exist, please login',
+  })
   @Post('register')
   async register(@Body() registrationData: CreateUserDto): Promise<User> {
     return this.authenticationService.register(registrationData);
   }
 
+  @ApiCreatedResponse({
+    description: 'Loged user object as response',
+    type: User,
+  })
+  @ApiBadRequestResponse({
+    description: 'Wrong credentials provided',
+  })
   @UseGuards(AuthGuard('local'))
   @Post('login')
   async login(
@@ -42,11 +57,13 @@ export class AuthenticationController {
     response.setHeader('Set-Cookie', cookie);
     user.password = undefined;
     user.token = cookie;
-    // console.log(user);
-    // console.log(cookie);
     return user;
   }
 
+  @ApiCreatedResponse({
+    description: 'Cookie string for logout',
+    type: String,
+  })
   @UseGuards(JwtAuthenticationGuard)
   @Post('logout')
   @HttpCode(200)
@@ -58,6 +75,10 @@ export class AuthenticationController {
     return response;
   }
 
+  @ApiCreatedResponse({
+    description: 'Authenticated user object as response',
+    type: User,
+  })
   @UseGuards(JwtAuthenticationGuard)
   @Get()
   authenticate(@Req() request: RequestWithUser): User {
