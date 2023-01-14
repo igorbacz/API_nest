@@ -54,9 +54,11 @@ export class AuthenticationController {
       user.id,
       user.email,
     );
-    response.setHeader('Set-Cookie', cookie);
+    //TODO Set-Cookie ?
+
+    response.setHeader('Cookie', cookie.val);
     user.password = undefined;
-    user.token = cookie;
+    user.token = cookie.val;
     return user;
   }
 
@@ -69,7 +71,8 @@ export class AuthenticationController {
   @HttpCode(200)
   async logOut(@Req() @Res() response: Response): Promise<Response> {
     response.setHeader(
-      'Set-Cookie',
+      //TODO Set-Cookie ?
+      'Cookie',
       this.authenticationService.getCookieForLogOut(),
     );
     return response;
@@ -82,7 +85,6 @@ export class AuthenticationController {
   @UseGuards(JwtAuthenticationGuard)
   @Get()
   authenticate(@Req() request: RequestWithUser): User {
-    console.log(request);
     const user = request.user;
     user.password = undefined;
     return user;

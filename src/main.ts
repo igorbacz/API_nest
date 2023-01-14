@@ -9,8 +9,10 @@ dotenv.config();
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
   app.use(cookieParser());
-  app.enableCors();
-
+  app.enableCors({
+    origin: 'http://localhost:3001',
+    credentials: true,
+  });
   const config = new DocumentBuilder()
     .setTitle('findjob.it')
     .setDescription('The findjob.it API description')
