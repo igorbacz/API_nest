@@ -5,10 +5,18 @@ import * as bcrypt from 'bcrypt';
 import { User } from 'src/users/schema/user.model';
 import { JwtService } from '@nestjs/jwt';
 import { ConfigService } from '@nestjs/config';
+import { object, string } from '@hapi/joi';
+import { CookieOptions } from 'express';
 
 interface TokenPayload {
   userId: string;
   email: string;
+}
+
+interface ICookieType {
+  name: string;
+  val: string;
+  options: CookieOptions;
 }
 
 @Injectable()
@@ -71,12 +79,19 @@ export class AuthenticationService {
       );
     }
   }
-  public getCookieWithJwtToken(userId: string, email: string): string {
+
+  public getCookieWithJwtToken(userId: string, email: string): ICookieType {
     const payload: TokenPayload = { userId, email };
     const token = this.jwtService.sign(payload);
-    return `Authentication=${token}; HttpOnly; Path=/; Max-Age=${this.configService.get(
-      'JWT_EXPIRATION_TIME',
-    )}`;
+    return {
+      name: 'Authentication',
+      val: token,
+      options: {
+        httpOnly: true,
+        maxAge: this.configService.get('JWT_EXPIRATION_TIME'),
+        // sameSite: 'lax',
+      },
+    };
   }
   public getCookieForLogOut(): string {
     return `Authentication=; HttpOnly; Path=/; Max-Age=0`;
