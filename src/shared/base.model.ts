@@ -15,6 +15,7 @@ export abstract class BaseModel<T> extends Document {
   @prop()
   updatedAt: Date;
 
+  @prop()
   id: string;
 }
 

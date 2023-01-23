@@ -1,11 +1,10 @@
 import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
-import { CreateUserDto } from 'src/users/dto/CreateUser.dto';
-import { UsersService } from 'src/users/users.service';
+import { CreateUserDto } from '../users/dto/CreateUser.dto';
+import { UsersService } from '../users/users.service';
 import * as bcrypt from 'bcrypt';
-import { User } from 'src/users/schema/user.model';
+import { User } from '../users/schema/user.model';
 import { JwtService } from '@nestjs/jwt';
 import { ConfigService } from '@nestjs/config';
-import { object, string } from '@hapi/joi';
 import { CookieOptions } from 'express';
 
 interface TokenPayload {
@@ -13,7 +12,7 @@ interface TokenPayload {
   email: string;
 }
 
-interface ICookieType {
+export interface ICookieType {
   name: string;
   val: string;
   options: CookieOptions;
@@ -89,7 +88,6 @@ export class AuthenticationService {
       options: {
         httpOnly: true,
         maxAge: this.configService.get('JWT_EXPIRATION_TIME'),
-        // sameSite: 'lax',
       },
     };
   }

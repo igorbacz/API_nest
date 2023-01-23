@@ -1,8 +1,6 @@
 import { Module } from '@nestjs/common';
 import { MongooseModule } from '@nestjs/mongoose';
 import * as dotenv from 'dotenv';
-import { OffersModule } from './offers/offers.module';
-import { UsersModule } from './users/users.module';
 import { AuthenticationService } from './authentication/authentication.service';
 import { AuthenticationModule } from './authentication/authentication.module';
 import { ConfigModule } from '@nestjs/config';
@@ -13,8 +11,6 @@ dotenv.config();
 
 @Module({
   imports: [
-    UsersModule,
-    OffersModule,
     MongooseModule.forRoot(process.env.DATABASE_URL),
     AuthenticationModule,
     ConfigModule.forRoot({
