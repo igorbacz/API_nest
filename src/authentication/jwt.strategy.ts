@@ -2,9 +2,9 @@ import { Injectable } from '@nestjs/common';
 import { PassportStrategy } from '@nestjs/passport';
 import { ExtractJwt, Strategy } from 'passport-jwt';
 import { ConfigService } from '@nestjs/config';
-import { UsersService } from 'src/users/users.service';
+import { UsersService } from '../users/users.service';
 import { Request } from 'express';
-import { User } from 'src/users/schema/user.model';
+import { User } from '../users/schema/user.model';
 
 interface TokenPayload {
   userId: string;

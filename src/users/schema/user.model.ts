@@ -2,7 +2,7 @@ import { ApiProperty } from '@nestjs/swagger';
 import { prop, getModelForClass } from '@typegoose/typegoose';
 import { ModelType } from '@typegoose/typegoose/lib/types';
 import { HydratedDocument } from 'mongoose';
-import { BaseModel, schemaOptions } from 'src/shared/base.model';
+import { BaseModel, schemaOptions } from '../../shared/base.model';
 
 export type UserDocument = HydratedDocument<User>;
 

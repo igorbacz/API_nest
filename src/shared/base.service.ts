@@ -4,13 +4,13 @@ import { HttpException, HttpStatus } from '@nestjs/common';
 
 
 export abstract class BaseService<T extends Document> {
-  protected model: ModelType<T>;
+  public model: ModelType<T>;
 
-  async findAll(filter = {}): Promise<T[]> {
+  public async findAll(filter = {}): Promise<T[]> {
     return this.model.find(filter).exec();
   }
 
-  async create(item: InstanceType<any>): Promise<T> {
+  public async create(item: InstanceType<any>): Promise<T> {
     const newItem = new this.model(item);
     const result = await newItem.save();
     return result;
@@ -21,7 +21,7 @@ export abstract class BaseService<T extends Document> {
   //   return
   // }
 
-  async update(
+  public async update(
     id: string,
     item: InstanceType<any>,
   ): Promise<InstanceType<any>> {
@@ -29,12 +29,12 @@ export abstract class BaseService<T extends Document> {
     return this.model.findByIdAndUpdate(objId, item, { new: true }).exec();
   }
 
-  async delete(id: string): Promise<T> {
+  public async delete(id: string): Promise<T> {
     const objId = new Types.ObjectId(id);
     return this.model.findByIdAndDelete(objId);
   }
 
-  async getById(id: string): Promise<T> {
+  public async getById(id: string): Promise<T> {
     const objId = new Types.ObjectId(id);
     const item = await this.model.findOne(objId);
     if (item) {
