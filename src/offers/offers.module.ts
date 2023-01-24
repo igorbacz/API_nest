@@ -8,9 +8,6 @@ import { BaseService } from 'src/shared/base.service';
 
 @Module({
   imports: [
-    //TODO remove ?
-    // forwardRef(() => BaseModel),
-    // forwardRef(() => BaseService),
     MongooseModule.forFeature([
       { name: Offer.name, schema: Offer.model.schema },
     ]),

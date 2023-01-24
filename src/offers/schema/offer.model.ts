@@ -1,3 +1,4 @@
+import { Prop } from '@nestjs/mongoose';
 import { prop, getModelForClass } from '@typegoose/typegoose';
 import { ModelType } from '@typegoose/typegoose/lib/types';
 import mongoose, { HydratedDocument } from 'mongoose';
@@ -9,49 +10,49 @@ import { TechStack } from './techStack.schema';
 export type OfferDocument = HydratedDocument<Offer>;
 
 export class Offer extends BaseModel<Offer> {
-  @prop()
+  @Prop()
   dateAdded: string;
 
-  @prop()
+  @Prop()
   remote: boolean;
 
-  @prop()
+  @Prop()
   title: string;
 
-  @prop()
+  @Prop()
   amount: string;
 
-  @prop()
+  @Prop()
   city: string;
 
-  @prop()
+  @Prop()
   companyName: string;
 
-  @prop()
+  @Prop()
   logo: string;
 
-  @prop()
+  @Prop()
   mainStack: string;
 
-  @prop()
+  @Prop()
   adress: string;
 
-  @prop()
+  @Prop()
   companySize: string;
 
-  @prop()
+  @Prop()
   exp: string;
 
-  @prop()
+  @Prop()
   description: string;
 
-  @prop({ type: Geolocation })
+  @Prop({ type: Geolocation })
   geolocation: Geolocation;
 
-  @prop({ type: TechStack })
+  @Prop({ type: TechStack })
   techStack: TechStack[];
 
-  @prop()
+  @Prop()
   adminEmail: string;
 
   static get model(): ModelType<Offer> {

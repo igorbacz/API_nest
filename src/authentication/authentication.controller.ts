@@ -54,7 +54,6 @@ export class AuthenticationController {
       user.id,
       user.email,
     );
-    //TODO Set-Cookie ?
 
     response.setHeader('Cookie', cookie.val);
     user.password = undefined;
