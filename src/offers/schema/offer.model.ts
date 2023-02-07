@@ -10,49 +10,49 @@ import { TechStack } from './techStack.schema';
 export type OfferDocument = HydratedDocument<Offer>;
 
 export class Offer extends BaseModel<Offer> {
-  @Prop()
+  @prop()
   dateAdded: string;
 
-  @Prop()
+  @prop()
   remote: boolean;
 
-  @Prop()
+  @prop()
   title: string;
 
-  @Prop()
+  @prop()
   amount: string;
 
-  @Prop()
+  @prop()
   city: string;
 
-  @Prop()
+  @prop()
   companyName: string;
 
-  @Prop()
+  @prop()
   logo: string;
 
-  @Prop()
+  @prop()
   mainStack: string;
 
-  @Prop()
+  @prop()
   adress: string;
 
-  @Prop()
+  @prop()
   companySize: string;
 
-  @Prop()
+  @prop()
   exp: string;
 
-  @Prop()
+  @prop()
   description: string;
 
-  @Prop({ type: Geolocation })
+  @prop({ type: Geolocation })
   geolocation: Geolocation;
 
-  @Prop({ type: TechStack })
+  @prop({ type: TechStack })
   techStack: TechStack[];
 
-  @Prop()
+  @prop()
   adminEmail: string;
 
   static get model(): ModelType<Offer> {
