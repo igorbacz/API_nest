@@ -3,17 +3,16 @@ import { JwtService } from '@nestjs/jwt';
 import { ConfigService } from '@nestjs/config';
 import { AuthenticationService } from './authentication.service';
 import { UsersService } from '../users/users.service';
-import { User } from 'src/users/schema/user.model';
+import { User } from '../users/schema/user.model';
 import { ICookieType } from './authentication.service';
-import { CreateUserDto } from 'src/users/dto/CreateUser.dto';
+import { CreateUserDto } from '../users/dto/CreateUser.dto';
 
 describe('The AuthenticationService', () => {
   const authenticationService = new AuthenticationService(
-    //TODO refactor like in nest jes testing documentation!
     //@ts-ignore
     new UsersService(new Repository<User>()),
     new JwtService({
-      secretOrPrivateKey: 'Secret key',
+      secretOrPrivateKey: 'privateKey',
     }),
     new ConfigService(),
   );
@@ -38,18 +37,9 @@ describe('The AuthenticationService', () => {
     });
   });
 
-  // describe('when login a user with bad credentials', () => {
-  //   it('should return an error ', () => {
-  //     const loginData: CreateUserDto = {
-  //       password: '12234',
-  //       email: 'email@email.com',
-  //     };
-  //     expect(
-  //       typeof authenticationService.getAutheticatedUser(
-  //         loginData.email,
-  //         loginData.password,
-  //       ),
-  //     ).toThrowError;
-  //   });
-  // });
+  describe('when getting a cookie for logout', () => {
+    it('should return a string', () => {
+      expect(typeof authenticationService.getCookieForLogOut()).toBe('string');
+    });
+  });
 });

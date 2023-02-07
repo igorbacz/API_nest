@@ -7,8 +7,6 @@ import { UsersService } from './users.service';
 
 @Module({
   imports: [
-    forwardRef(() => BaseModel),
-    forwardRef(() => AuthenticationModule),
     MongooseModule.forFeature([
       {
         name: User.name,

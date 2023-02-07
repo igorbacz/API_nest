@@ -1,16 +1,11 @@
-import { Module, forwardRef } from '@nestjs/common';
+import { Module } from '@nestjs/common';
 import { MongooseModule } from '@nestjs/mongoose';
 import { OffersService } from './offers.service';
 import { OffersController } from './offers.controller';
 import { Offer } from './schema/offer.model';
-import { BaseModel } from '../shared/base.model';
-import { BaseService } from 'src/shared/base.service';
 
 @Module({
   imports: [
-    //TODO remove ?
-    // forwardRef(() => BaseModel),
-    // forwardRef(() => BaseService),
     MongooseModule.forFeature([
       { name: Offer.name, schema: Offer.model.schema },
     ]),

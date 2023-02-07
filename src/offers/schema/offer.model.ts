@@ -1,3 +1,4 @@
+import { Prop } from '@nestjs/mongoose';
 import { prop, getModelForClass } from '@typegoose/typegoose';
 import { ModelType } from '@typegoose/typegoose/lib/types';
 import mongoose, { HydratedDocument } from 'mongoose';

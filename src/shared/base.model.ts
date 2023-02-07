@@ -1,4 +1,4 @@
-import { SchemaOptions } from '@nestjs/mongoose';
+import { Prop, SchemaOptions } from '@nestjs/mongoose';
 import { prop } from '@typegoose/typegoose';
 import { Document } from 'mongoose';
 
@@ -7,15 +7,14 @@ export class BaseModelVm {
   updatedAt?: Date;
   id?: string;
 }
-
 export abstract class BaseModel<T> extends Document {
-  @prop()
+  @Prop()
   createdAt: Date;
 
-  @prop()
+  @Prop()
   updatedAt: Date;
 
-  @prop()
+  @Prop()
   id: string;
 }
 
