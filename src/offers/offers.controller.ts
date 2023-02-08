@@ -9,14 +9,11 @@ import {
   UseGuards,
 } from '@nestjs/common';
 import { AuthGuard } from '@nestjs/passport';
-import {
-  ApiBadRequestResponse,
-  ApiBody,
-  ApiCreatedResponse,
-} from '@nestjs/swagger';
-import { CreateOfferDto } from './dto/createOffer.dto';
+import { ApiBody, ApiCreatedResponse } from '@nestjs/swagger';
+import { CreateOfferDto } from './dto/CreateOffer.dto';
 import { OffersService } from './offers.service';
 import { Offer } from './schema/offer.model';
+
 
 @Controller('offers')
 export class OffersController {
