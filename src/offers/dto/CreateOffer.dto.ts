@@ -1,19 +1,5 @@
 import { ApiProperty } from '@nestjs/swagger';
 
-class Geolocation {
-  @ApiProperty({
-    description: 'latitiude',
-    example: 24.665467,
-  })
-  latitiude: number;
-
-  @ApiProperty({
-    description: 'longitiude',
-    example: 51.665467,
-  })
-  longitiude: number;
-}
-
 class TechStack {
   @ApiProperty({
     description: 'Stack name',
@@ -32,6 +18,20 @@ class TechStack {
     example: 2,
   })
   value: number;
+}
+
+class Geolocation {
+  @ApiProperty({
+    description: 'latitiude',
+    example: 24.665467,
+  })
+  latitiude: number;
+
+  @ApiProperty({
+    description: 'longitiude',
+    example: 51.665467,
+  })
+  longitiude: number;
 }
 
 export class CreateOfferDto {
@@ -139,3 +139,5 @@ export class CreateOfferDto {
   })
   adminEmail: string;
 }
+
+
