@@ -1,5 +1,5 @@
 #build stage 
-FROM node:18-alpine AS build
+FROM node:18-alpine As build
 
 WORKDIR /usr/src/app
 
@@ -16,7 +16,7 @@ RUN npm run build
 
 FROM node:18-alpine
 
-WORKDIR /app
+WORKDIR /usr/src/app
 
 ARG NODE_ENV=production
 
