@@ -5,6 +5,9 @@ import { ConfigService } from '@nestjs/config';
 import { UsersService } from '../users/users.service';
 import { Request } from 'express';
 import { User } from '../users/schema/user.model';
+import * as dotenv from 'dotenv';
+
+dotenv.config();
 
 interface TokenPayload {
   userId: string;
@@ -22,7 +25,7 @@ export class JwtStrategy extends PassportStrategy(Strategy) {
           return request?.cookies?.Authentication;
         },
       ]),
-      secretOrKey: configService.get('JWT_SECRET'),
+      secretOrKey: `${process.env.ADMIN_JWT_SECRET}`,
     });
   }
 
