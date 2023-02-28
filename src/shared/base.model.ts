@@ -1,5 +1,4 @@
 import { Prop, SchemaOptions } from '@nestjs/mongoose';
-import { prop } from '@typegoose/typegoose';
 import { Document } from 'mongoose';
 
 export class BaseModelVm {

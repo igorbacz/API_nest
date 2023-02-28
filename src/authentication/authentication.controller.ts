@@ -70,7 +70,6 @@ export class AuthenticationController {
   @HttpCode(200)
   async logOut(@Req() @Res() response: Response): Promise<Response> {
     response.setHeader(
-      //TODO Set-Cookie ?
       'Cookie',
       this.authenticationService.getCookieForLogOut(),
     );
