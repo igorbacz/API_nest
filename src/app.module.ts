@@ -17,7 +17,9 @@ dotenv.config();
   imports: [
     UsersModule,
     OffersModule,
-    MongooseModule.forRoot(process.env.DATABASE_URL),
+    MongooseModule.forRoot(
+      `mongodb+srv://${process.env.MONGO_INITDB_ROOT_USERNAME}:${process.env.MONGO_INITDB_ROOT_PASSWORD}@cluster0.2pdcrp9.mongodb.net/?retryWrites=true&w=majority`,
+    ),
     AuthenticationModule,
     ConfigModule.forRoot({
       isGlobal: true,
