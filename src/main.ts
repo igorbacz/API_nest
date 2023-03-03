@@ -10,7 +10,7 @@ async function bootstrap() {
   const app = await NestFactory.create(AppModule);
   app.use(cookieParser());
   app.enableCors({
-    origin: 'http://www.iwonagorbacz.pl',
+    origin: 'https://www.iwonagorbacz.pl',
     // origin: 'http://localhost:3001',
     credentials: true,
   });
