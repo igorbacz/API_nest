@@ -46,11 +46,20 @@ export class Offer extends BaseModel<Offer> {
   @prop()
   description: string;
 
-  @prop({ type: Geolocation })
-  geolocation: Geolocation;
+  @prop({ type: Object })
+  geolocation: {
+    latitude: { type: number };
+    longitude: { type: number };
+  };
 
-  @prop({ type: TechStack })
-  techStack: TechStack[];
+  @prop({ type: Array })
+  techStack: [
+    {
+      stackName: { type: String };
+      stackLvl: { type: String };
+      value: { type: number };
+    },
+  ];
 
   @prop()
   adminEmail: string;

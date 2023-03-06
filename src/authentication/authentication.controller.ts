@@ -2,6 +2,7 @@ import {
   Body,
   Controller,
   Get,
+  Header,
   HttpCode,
   Post,
   Req,
@@ -15,6 +16,7 @@ import { AuthenticationService } from './authentication.service';
 import { Response, Request } from 'express';
 import JwtAuthenticationGuard from './jwt-authentication.guard';
 import { ApiBadRequestResponse, ApiCreatedResponse } from '@nestjs/swagger';
+import originUrl from '../const/originUrl';
 
 interface RequestWithUser extends Request {
   user: User;
@@ -82,6 +84,8 @@ export class AuthenticationController {
   })
   @UseGuards(JwtAuthenticationGuard)
   @Get()
+  @Header('Access-Control-Allow-Origin', `${originUrl}`)
+  @Header('Access-Control-Allow-Credentials', 'true')
   authenticate(@Req() request: RequestWithUser): User {
     const user = request.user;
     user.password = undefined;
