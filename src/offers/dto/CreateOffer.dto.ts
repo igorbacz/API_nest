@@ -25,13 +25,13 @@ class Geolocation {
     description: 'latitiude',
     example: 24.665467,
   })
-  latitiude: number;
+  latitude: number;
 
   @ApiProperty({
     description: 'longitiude',
     example: 51.665467,
   })
-  longitiude: number;
+  longitude: number;
 }
 
 export class CreateOfferDto {
@@ -111,9 +111,9 @@ export class CreateOfferDto {
 
   @ApiProperty({
     description: 'Geolocation of company',
-    example: { longitiude: 12.4567898, latitiude: 36.56898 },
+    example: { longitiude: '12.4567898', latitiude: '36.56898' },
   })
-  geolocation: Geolocation;
+  geolocation: Object;
 
   @ApiProperty({
     isArray: true,
@@ -131,7 +131,7 @@ export class CreateOfferDto {
       },
     ],
   })
-  techStack: TechStack[];
+  techStack: Array<TechStack>;
 
   @ApiProperty({
     description: 'Admin email',
@@ -139,5 +139,3 @@ export class CreateOfferDto {
   })
   adminEmail: string;
 }
-
-

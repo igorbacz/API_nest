@@ -6,10 +6,10 @@ export type GeolocationDocument = HydratedDocument<Geolocation>;
 @Schema()
 export class Geolocation {
   @Prop()
-  latitiude: number;
+  latitude: number;
 
   @Prop()
-  longitiude: number;
+  longitude: number;
 }
 
 export const GeolocationSchema = SchemaFactory.createForClass(Geolocation);

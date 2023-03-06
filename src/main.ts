@@ -7,13 +7,8 @@ import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 dotenv.config();
 
 async function bootstrap() {
-  const app = await NestFactory.create(AppModule);
+  const app = await NestFactory.create(AppModule, { cors: true });
   app.use(cookieParser());
-  app.enableCors({
-    origin: 'https://www.iwonagorbacz.pl',
-    // origin: 'http://localhost:3001',
-    credentials: true,
-  });
   const config = new DocumentBuilder()
     .setTitle('findjob.it')
     .setDescription('The findjob.it API description')
