@@ -85,7 +85,7 @@ export class AuthenticationController {
   })
   @UseGuards(JwtAuthenticationGuard)
   @Get()
-  @Header('Access-Control-Allow-Origin', `*`)
+  @Header('Access-Control-Allow-Origin', `${originUrl}`)
   @Header('Access-Control-Allow-Credentials', 'true')
   authenticate(@Req() request: RequestWithUser): User {
     const user = request.user;
