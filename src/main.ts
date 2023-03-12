@@ -12,7 +12,7 @@ async function bootstrap() {
       credentials: true,
       origin: ['https://www.iwonagorbacz.pl/', 'http://localhost:3001'],
       methods: '*',
-      allowedHeaders: '*',
+      // allowedHeaders: '*',
     },
   });
   app.use(cookieParser());
