@@ -47,7 +47,7 @@ export class AuthenticationController {
   })
   @UseGuards(AuthGuard('local'))
   @Post('login')
-  @Header('Access-Control-Allow-Origin', `*`)
+  @Header('Access-Control-Allow-Origin', `${originUrl}`)
   async login(
     @Body() userData: User,
     @Res({ passthrough: true }) response: Response,
