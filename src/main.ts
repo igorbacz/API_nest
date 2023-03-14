@@ -8,22 +8,22 @@ import originUrl from './const/originUrl';
 dotenv.config();
 
 async function bootstrap() {
-  // const app = await NestFactory.create(AppModule, {
-  //   cors: {
-  //     credentials: true,
-  //     // origin: true,
-  //     origin: `${originUrl}`,
-  //     methods: '*',
-  //     allowedHeaders: '*',
-  //   },
-  // });
-  // app.use(cookieParser());
-  const app = await NestFactory.create(AppModule);
-  app.use(cookieParser());
-  app.enableCors({
-    origin: `${originUrl}`,
-    credentials: true,
+  const app = await NestFactory.create(AppModule, {
+    cors: {
+      credentials: true,
+      origin: `${originUrl}`,
+      methods: '*',
+      allowedHeaders: '*',
+    },
   });
+  app.use(cookieParser());
+  // const app = await NestFactory.create(AppModule);
+  // app.use(cookieParser());
+  // app.enableCors({
+  //   origin: `${originUrl}`,
+  //   credentials: true,
+  //   allowedHeaders: ['content-type'],
+  // });
   const config = new DocumentBuilder()
     .setTitle('findjob.it')
     .setDescription('The findjob.it API description')
