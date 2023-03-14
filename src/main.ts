@@ -23,6 +23,7 @@ async function bootstrap() {
   app.enableCors({
     origin: `${originUrl}`,
     credentials: true,
+    allowedHeaders: ['content-type'],
   });
   const config = new DocumentBuilder()
     .setTitle('findjob.it')
