@@ -47,7 +47,9 @@ export class AuthenticationController {
   })
   @UseGuards(AuthGuard('local'))
   @Post('login')
-  @Header('Access-Control-Allow-Origin', `${originUrl}`)
+  // @Header('Access-Control-Allow-Origin', `${originUrl}`)
+  @Header('Access-Control-Allow-Headers', 'true')
+  @Header('Access-Control-Allow-Methods', 'POST, OPTIONS')
   async login(
     @Body() userData: User,
     @Res({ passthrough: true }) response: Response,
@@ -58,7 +60,9 @@ export class AuthenticationController {
       user.email,
     );
 
-    response.cookie('Authentication', cookie.val);
+    response.cookie('Cookie', cookie.val, {
+      httpOnly: true,
+    });
     user.password = undefined;
     user.token = cookie.val;
     return user;

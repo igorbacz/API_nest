@@ -86,7 +86,7 @@ export class AuthenticationService {
       name: 'Authentication',
       val: token,
       options: {
-        // httpOnly: true,
+        httpOnly: true,
         maxAge: this.configService.get('JWT_EXPIRATION_TIME'),
       },
     };
