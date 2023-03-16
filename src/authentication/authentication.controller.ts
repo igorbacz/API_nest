@@ -47,7 +47,7 @@ export class AuthenticationController {
   })
   @UseGuards(AuthGuard('local'))
   @Post('login')
-  // @Header('Access-Control-Allow-Origin', `${originUrl}`)
+  @Header('Access-Control-Allow-Origin', `${originUrl}`)
   @Header('Access-Control-Allow-Headers', 'true')
   @Header('Access-Control-Allow-Methods', 'POST, OPTIONS')
   async login(
@@ -60,7 +60,7 @@ export class AuthenticationController {
       user.email,
     );
 
-    response.cookie('Cookie', cookie.val, {
+    response.cookie('Set-Cookie', cookie.val, {
       httpOnly: true,
     });
     user.password = undefined;
@@ -77,7 +77,7 @@ export class AuthenticationController {
   @HttpCode(200)
   async logOut(@Req() @Res() response: Response): Promise<Response> {
     response.setHeader(
-      'Cookie',
+      'Set-Cookie',
       this.authenticationService.getCookieForLogOut(),
     );
     return response;
