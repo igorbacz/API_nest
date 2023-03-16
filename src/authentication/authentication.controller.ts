@@ -60,7 +60,7 @@ export class AuthenticationController {
       user.email,
     );
 
-    response.cookie('Set-Cookie', cookie.val, {
+    response.cookie('Authentication', cookie.val, {
       httpOnly: true,
       secure: true, 
       sameSite: "none",
