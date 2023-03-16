@@ -58,7 +58,10 @@ export class AuthenticationController {
       user.email,
     );
 
-    response.setHeader('Cookie', cookie.val);
+    response.cookie('Authentication', cookie.val, {
+      httpOnly: true,
+      secure: true,
+    });
     user.password = undefined;
     user.token = cookie.val;
     return user;
