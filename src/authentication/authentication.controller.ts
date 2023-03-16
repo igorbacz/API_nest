@@ -87,6 +87,7 @@ export class AuthenticationController {
   @Get()
   @Header('Access-Control-Allow-Origin', `${originUrl}`)
   @Header('Access-Control-Allow-Credentials', 'true')
+  @Header('Access-Control-Allow-Headers: access-control-allow-credentials')
   authenticate(@Req() request: RequestWithUser): User {
     const user = request.user;
     user.password = undefined;
