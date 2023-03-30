@@ -59,11 +59,10 @@ export class AuthenticationController {
       user.id,
       user.email,
     );
-
     response.cookie('Authentication', cookie.val, {
       httpOnly: true,
-      secure: true, 
-      sameSite: "none",
+      secure: true,
+      sameSite: 'none',
     });
     user.password = undefined;
     user.token = cookie.val;
@@ -74,15 +73,18 @@ export class AuthenticationController {
     description: 'Cookie string for logout',
     type: String,
   })
-  @UseGuards(JwtAuthenticationGuard)
+  // @UseGuards(JwtAuthenticationGuard)
   @Post('logout')
   @HttpCode(200)
-  async logOut(@Req() @Res() response: Response): Promise<Response> {
-    response.setHeader(
+  async logOut(
+    @Req()
+    @Res()
+    response: Response,
+  ): Promise<Response> {
+    return response.setHeader(
       'Set-Cookie',
       this.authenticationService.getCookieForLogOut(),
     );
-    return response;
   }
 
   @ApiCreatedResponse({

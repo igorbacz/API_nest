@@ -29,9 +29,8 @@ export class AuthenticationService {
     const hashedPassword = await bcrypt.hash(registrationData.password, 10);
     const oldUser = await this.userService.getByEmail(registrationData.email);
     if (oldUser) {
-      throw new HttpException('User already exist', HttpStatus.BAD_REQUEST);
+      throw new HttpException('User already exist', HttpStatus.CONFLICT);
     }
-
     try {
       const createdUser = await this.userService.create({
         ...registrationData,

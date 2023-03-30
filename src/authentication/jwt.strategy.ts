@@ -19,7 +19,6 @@ export class JwtStrategy extends PassportStrategy(Strategy) {
     private readonly configService: ConfigService,
     private readonly userService: UsersService,
   ) {
-    //todo Cookie - set-cookie
     super({
       jwtFromRequest: ExtractJwt.fromExtractors([
         (request: Request) => {
