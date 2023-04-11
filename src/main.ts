@@ -4,16 +4,21 @@ import * as dotenv from 'dotenv';
 import * as cookieParser from 'cookie-parser';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 import originUrl from './const/originUrl';
+import getLogLevels from './log/getLogLevels';
+import { LoggerInterceptor } from './log/logger.interceptor';
 
 dotenv.config();
 
 async function bootstrap() {
-  const app = await NestFactory.create(AppModule);
+  const app = await NestFactory.create(AppModule, {
+    logger: getLogLevels(true),
+  });
   app.use(cookieParser());
   app.enableCors({
     origin: `${originUrl}`,
     credentials: true,
   });
+  app.useGlobalInterceptors(new LoggerInterceptor());
   const config = new DocumentBuilder()
     .setTitle('findjob.it')
     .setDescription('The findjob.it API description')

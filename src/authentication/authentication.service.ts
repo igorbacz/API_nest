@@ -1,4 +1,4 @@
-import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
+import { HttpException, HttpStatus, Injectable, Logger } from '@nestjs/common';
 import { CreateUserDto } from '../users/dto/CreateUser.dto';
 import { UsersService } from '../users/users.service';
 import * as bcrypt from 'bcrypt';
@@ -20,6 +20,8 @@ export interface ICookieType {
 
 @Injectable()
 export class AuthenticationService {
+  private readonly logger = new Logger(AuthenticationService.name);
+
   constructor(
     private readonly userService: UsersService,
     private readonly jwtService: JwtService,
@@ -55,6 +57,8 @@ export class AuthenticationService {
       user.password = undefined;
       return user;
     } catch (error) {
+      this.logger.warn('Failed to authenticate user ');
+      this.logger.error(error);
       throw new HttpException(
         'Wrong credentials provided',
         HttpStatus.BAD_REQUEST,

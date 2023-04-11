@@ -1,4 +1,4 @@
-import { Module } from '@nestjs/common';
+import { MiddlewareConsumer, Module } from '@nestjs/common';
 import { MongooseModule } from '@nestjs/mongoose';
 import * as dotenv from 'dotenv';
 import { AuthenticationService } from './authentication/authentication.service';
@@ -8,7 +8,7 @@ import Joi from '@hapi/joi';
 import { JwtService } from '@nestjs/jwt';
 import { UsersModule } from './users/users.module';
 import { OffersModule } from './offers/offers.module';
-
+import LogsMiddleware from './log/logs.middleware';
 
 dotenv.config();
 
@@ -30,4 +30,8 @@ dotenv.config();
   ],
   providers: [AuthenticationService, JwtService],
 })
-export class AppModule {}
+export class AppModule {
+  configure(consumer: MiddlewareConsumer) {
+    consumer.apply(LogsMiddleware).forRoutes('*');
+  }
+}

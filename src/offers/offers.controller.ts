@@ -3,6 +3,7 @@ import {
   Controller,
   Delete,
   Get,
+  Logger,
   Param,
   Post,
   Put,
@@ -14,6 +15,7 @@ import { Offer } from './schema/offer.model';
 
 @Controller('offers')
 export class OffersController {
+  private readonly logger = new Logger(OffersService.name);
   constructor(private offersService: OffersService) {}
 
   @ApiCreatedResponse({
